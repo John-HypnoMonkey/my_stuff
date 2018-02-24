@@ -1,0 +1,30 @@
+To install vundle on vim:
+
+step 1. Run in the shell
+git clone github.com/gmarik/vundle.git ~/.vim/bundle/vundle 
+
+step 2. Add to your .vimrc
+set nocompatible
+filetype off 
+
+set rtp+=~/.vim/bundle/vundle/
+
+call vundle#rc()
+
+filetype plugin indent on  
+
+"repos on github
+Bundle 'tpope/vim-fugitive'
+Bundle 'lokaltog/vim-easymotion'
+Bundle 'rstacruz/sparkup', {'rtp': 'vim/'}
+"repos in vim/scripts
+Bundle 'L9'
+Bundle 'FuzzyFinder'
+Bundle 'rails.vim'
+"local repos
+Bundle 'file:///Users/gmarik/path/to/plugin'
+
+step 3
+Into VIM
+:BundleInstall
+:BundleList
