@@ -1,0 +1,143 @@
+MYDIR=`dirname /usr/local/share/doc/foo/foo.txt`
+$ echo $MYDIR
+/usr/local/share/doc/foo
+
+
+#!/bin/bash
+
+if [ "${1##*.}" = "tar" ]
+then
+       echo "Кажется это тарбол."
+else
+       echo "На первый взгляд, это не похоже на тарбол."
+fi
+
+
+if [ условие ]
+then 
+        действие
+elif [ условие_2 ]
+then
+        действие_2
+elif [ условие_3 ]
+then
+.
+.
+.
+else
+        действие_x
+fi
+
+
+#!/bin/bash
+
+echo "Имя скрипта — $0"
+echo "Первый аргумент: $1"
+echo "Второй аргумент: ${2}"
+echo "Семнадцатый аргумент: ${17}"
+echo "Количество аргументов: $#"
+
+
+
+#!/bin/bash
+
+for x in one two three four
+do
+    echo "number $x"
+done
+
+
+
+#!/bin/bash
+
+for myfile in /etc/r*
+do
+    if [ -d "$myfile" ] 
+    then
+      echo "$myfile (dir)"
+    else
+      echo "$myfile"
+    fi
+done
+
+
+for x in /etc/r??? /var/lo* /home/drobbins/mystuff/* /tmp/${MYPATH}/*
+do
+    cp $x /mnt/mydira
+done
+
+
+for x in ../* mystuff/*
+do
+     echo "$x is a silly file"
+done
+
+
+#!/bin/bash
+
+for i in "$@"
+do
+    echo "Вы написали: ${i}."
+done
+
+
+$ echo $(( 100 / 3 ))
+33
+$ myvar="56"
+$ echo $(( $myvar + 12 ))
+68
+$ echo $(( $myvar - $myvar ))
+0
+$ myvar=$(( $myvar + 1 ))
+$ echo $myvar
+57
+
+
+
+myvar=0
+while [ $myvar -ne 10 ]
+do
+    echo "$myvar"
+    myvar=$(( $myvar + 1 ))
+done
+
+
+
+#!/bin/bash
+
+myvar="hello"
+
+myfunc() {
+
+    myvar="one two three"
+    for x in $myvar
+    do
+        echo $x
+    done
+}
+
+myfunc
+
+echo $myvar $x
+
+
+
+#!/bin/bash
+
+myvar="hello"
+
+myfunc() {
+
+    myvar="one two three"
+    for x in $myvar
+    do
+        echo $x
+    done
+}
+
+myfunc
+
+echo $myvar $x
+
+
+

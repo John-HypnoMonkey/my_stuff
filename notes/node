@@ -1,0 +1,21 @@
+npm init #will create a package.json and node_modules folder
+
+nodejs is a engine runing on the server
+works on a single thread using non-blocking I/O calls
+Supports tens of thousand concurrent connections
+
+В отличие от традиционных serverside аппликаций где придется
+ждать выполнение каждого события прежде чем приступить к
+следующему, здесь события могут выполняться одновременно
+
+package.json File is an important file
+Goes in the root of your package/application
+Tells npm how your package is structured and what to do
+to install it
+
+in terminal
+node app.js 
+or
+node app
+
+to run application

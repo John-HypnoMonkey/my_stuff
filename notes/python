@@ -1,0 +1,882 @@
+
+pip install -U -r requirements.txt
+
+Сейчас попробуем поработать с юнит тестами на пайтон. Насколько я знаю в пайтон это builtin модуль.
+
+подключаем саму либу
+import utittest
+
+команда assert это своего рода if not для теста, в случае если
+условие не соблюдается вызывается исключение.
+
+пример
+
+import unittest
+
+class SomeTest(unittest.TestCase): #Обрати внимание на наследование
+    def first_test(self):
+        self.assertEqual(1,2) #вызовет провал теста
+
+if __name__ == '__main__':
+    unittest.main()		#вызываем юниттест
+
+Типы ассертов которые я видел
+
+assert
+assertEqual
+assertTrue # to verify a condition
+assertFalse
+assertRaises # to verify that aspecific exception gets raised
+############################################################
+Отступление:
+слово with Пока мне кажется что это своего рода враппер для
+класса который совершает определенные try finnaly процесс
+with open("mylog.log", "r") as file:
+    pass
+file - имя переменной
+#end#########################################################
+
+Для более подробного(verbosity) отчета добавь -v
+python3 unit.py -v
+
+Так же можно протестировать конкретный файл
+python -m unittest -v tests/test_something.py 
+
+-f --failfast #останавливает тест после первого фейла
+
+Есть еще какой-то режим дискавери, нужно будет про него почитать
+
+Ввиду того что количество тестов может быть большое а настройка 
+повторяющейся, есть метод setUp
+
+class WidgetTestCase(unittest.TestCase):
+    def setUp(self):
+	self.widget = Widget('The widget')
+
+    def test_default_widget_size(self):
+        self.assertEqual(self.widget.size(), (50,50), 'incorrect default size')
+
+Обрати внимание на третий параметр в ассерте, очевидно пишет причину при срабатываание
+
+Метод tearDown() подобен сетапу, но вызывается уже после тестов
+
+    def tearDown(self):
+         self.widget.dispose()
+
+Имена тест методов должны начинаться с test
+Я так понимаю это обычная практика запускать тесты когда модуль 
+запускается отдельно, т.е.
+
+if __name__ == '__main__':
+    unittest.main()
+
+
+Testing is especially helpful when refactoring code.
+Suite - a logical grouping of unit tests.
+
+#########Exception##############
+impot sys
+try:
+    f = open('integers.txt')
+    s = f.readline()
+    i = int(s.strip())
+except IOError as e:
+    errno, strerror = e.args
+    print("I/o error({0}): {1}".format(errno,strerror))
+    # e can be printed directly
+    # print(e)
+except ValueError:
+    print("No valid integer in line.")
+except:
+    print("Unexpected error:", sys.exc_info()[0])
+    raise
+finaly:
+    #blah blah blah
+##########end###################
+
+
+pip3 always operates on the Python3 environment only, as pip does with Python2.
+Pip operates on whichever environment is appropriate to the context. For example
+if you are in a Python3 venv, pip will operate on the Python3 environment.
+
+Create virtual enviroment
+
+python3.6 -m venv venv36
+source venv35/bin/activate
+deactivate для отключения
+или
+
+virtualenv -p python3.6 /path/to/yourenv
+
+Была ошибка с вызовом pip и pip3, после того как я удалил ~/.local/lib/python(x.x)/site_packages
+
+virtualenv -p python3.6 projectname вызывает ошибку в то время как с 2.7 все нормально
+ну можно просто virtualenv projectname
+virtualenv --python=python3.5 envname тоже сработало
+pip3 install -I django==1.11
+Когда пытаюсь установить в виртуальной среде, то получаю ошибку доступа.
+Решил ошибку, если указать при установки вирт среды путь до пайтона
+Заметка, походу 3.6 версия у меня работает через конду (можно проверить через which python3.6)
+Решил проблему установив пайтон3.6 через апт гет и удалив python3.6 в конде (вообще надо бы просто в путях переписать чтобы к конде обращалисьв последнюю очередь,
+а то возможно конда сейчас не будет корректно работать)
+virtualenv --python=/usr/bin/python3.6 envname
+Версию модуля можно посмотреть через
+python -m django --version
+
+a = sorted(a, key=lambda x: x.some_var, reverse=True)
+
+
+There is no separate 'long int' type. The default integer type can by any 
+large value.
+
+Strings can be in English or any other language thatis supported in the
+Unicode standard.
+
+Raw strings
+
+r"Newlines are indicated by \n"
+
+Always use raw strings when dealing with regular expressions. Otherwise, 
+a lot of backwhacking maybe required.
+
+print('{0} is {1} years old'.format(name, age))
+
+print(f'{name} is {age} years old')
+
+Python refers to anything used in a program as an object.
+
+s = 'This is a string. \
+This is contiues the string.'
+
+print\
+(i)
+
+Do not use a mixture of tabs and spaces for the indentation as it does not work
+across different platforms properly.
+
+
+3 ** 4 gives 81
+
+4 / 3 gives 1.33333333333333
+
+9 // 4 gives 2 (floor devision)
+
+9 % 4 gives 1 (modulo)
+
+
+shortcut
+
++= *= -= etc
+(There is no ++)
+
+x = int(input('Enter an integer : '))
+
+there is no switch statement
+
+Remeber what you can have an else clause for the while(and else) loop.
+
+break and continue used in loops
+
+
+x = 50
+def func():
+   global x
+
+Nonlocal scope are observed when you define function inside function
+def func_outer():
+    x = 2
+    def func_inner():
+        nonlocal x
+
+def func(a,b=5,c=10)
+    pass
+func(c=50, a=100)
+
+def total(initial=5, *numbers, **keywords):
+    pass
+total(one=1,two=2,three=3)
+#numbers[] -vals
+#keywords[]  -keys
+
+#somekind of static method
+class SomeClass():
+    @classmethod
+    def someClass():
+        pass
+
+    @classmethod
+    def someClass(cls, somevar1):
+        pass
+
+
+The convention followed for a docstring is a multi-line string where the first
+line start with a capital letter and ends with a dot. Then the second line is 
+blank followed by any detailed explanation starting from the third line.
+
+Learn more about function's anatation
+
+The sys.argv contains the list of command line arguments
+(The name of the script running is always the first argument)
+
+The sys.path contains the list of directory names where modules are imported
+from.(The first argument is empty)
+
+import os
+print(os.getcwd()) #to find out the current directory
+
+It is always recommended to prefer the import statement (not from ... import)
+even though it might make your program a litte longer
+
+Use dir(modulename) it will return the llst of te names defined in that module
+(When no argument is applieed to it, it returns the list of names defined in
+the current module) dir() also works with anykind of objects.
+
+del some_variable
+
+Module in python it is just a .py file
+Packagesare just folders of modules witha special __init__.py file
+
+Lists
+append()
+sort
+del somelist[1]
+
+Tuples
+The parentheses are optional
+
+zoo = ('python', 'elephant', 'penguin') # remember the parentheses are
+optional
+print('Number of animals in the zoo is', len(zoo))
+new_zoo = ('monkey', 'camel', zoo)
+print('Number of cages in the new zoo is', len(new_zoo))
+print('All animals in new zoo are', new_zoo)
+print('Animals brought from old zoo are', new_zoo[2])
+print('Last animal brought from old zoo is', new_zoo[2][2]
+
+A list within a list does not lose its identity i.e. lists are not flattened as
+in Perl. The same applies to a tuple within a tuple or a tuple within a list
+or a list within a tuple
+
+Dict
+dict1 =  { 'John' : 'john@mail.com', 'Smith' : 'smith@mail.com}
+
+for name, address in dict1.items():
+ ...
+
+if 'John' in dict1:
+ ...
+
+Slicing
+Also have  third argument, which is the step for the slicing
+>>shoplist[::1]
+['0','1','2','3','4']
+>>shoplist[::2]
+['0','2','4']
+>>shoplist[::-1]
+['4','3','2','1','0']
+
+Set
+Set doesn't support indexing.
+Useful to find the intersection between two sets.
+set1 = set([1,2,3])
+set1 & set2 #OR set1.intersection(set2)
+set1.remove(2) # del не используем тк он не работает с set
+set1.issuperset(set2)
+
+list1 = list2		#ссылаются на один и тот же объект
+list1 = list2[:]	#создается копия объекта
+
+
+& (and) | (or) ^ (xor)
+используются для сравнения двух множеств.В первом случае выводится множество
+совпадающих элементов, во втором всех и в третьем уникальных.
+
+
+str
+if str1.startswith('Something'):
+...
+if 'a' in str1:
+...
+if str1.find('something'):
+...
+delimiter ='-'
+list1 = ['1','2','3']
+print(delimiter.join(list1))
+1-2-3
+
+
+somelist = ['"C:\\My Documents"', 'C:\\Code']#двойные кавычки если есть пробел
+и экранирующий бэкслеш для бэкслеша
+
+os.sep - переменная хранящая сепаратор ("/" в линкусе "\\"в виндоусе)
+
+time.strftime('%Y%m%d%H%M%S')
+
+if not os.path.exists(somedir):
+    os.mkdir(somedir)
+
+run command into bash
+zip_command = "zip -qr {0} {1}".format(var1,var2)
+if os.system(zip_command) == 0:
+	print('good')
+else
+	print('not good')
+
+У классов функции называются методами.
+
+
+class Robot:
+    population = 0
+    def __init__(self):
+        Robot.population += 1 #переменная класса, что-то вроде статичных 
+				переменных в си шарпе
+
+    def __del__(self):	      #эта функция срабатывает когда используется del
+	print("I was deleted)
+    
+    def howMany():
+        print(Robot.population) #интересно, мы можем объявлять методы класса
+				без @classmethod
+
+Ага, есть статичные методы а есть методы класса и без декоратора используется
+статичный. К статичному методу можно обращаться через экземпляр класса, к
+ методу класса только через класс. Тк без декораторов и селф метод ведет себя
+как метод класса полагаю что по умолчанию используется он.
+Декораторы
+@staticmethod и @classmethod
+
+All clas memebers (including the data members) are public and all the methods
+are virtual in Python.
+За исключением переменных обявленных как  __var, они считаются приватными
+и через интерпретатор напрямую к ним доступ получить нельзя (не уверен везде ли
+так) их не видно через dir()
+
+Можно использовать свойства
+def __init__(self):
+	self.__temperature = 37
+
+@property
+def temperature(self):
+	return self.__temperature
+@temperature.setter
+def temperature(self, value):
+	self.__temperature = value
+
+Python doesn't  automatically call the constructor of te base class.
+Пайтон всегда сначала ищет метод в текущем классе и только потом идет по 
+потомкам
+class A():
+    def __init__(self):
+	pass
+    def tell(self):
+	pass
+class B(A):
+    def tell(self):
+	A.tell(self)
+    def __init__(self):
+	A.__init__(self)
+
+#пайтон поддерживает множественное наследование
+class C(A,B):
+     pass
+
+
+
+str1.rstrip(50) выведет строку в 50 символов с выравниванием по правому краю
+
+list1 = str1.split(" ") разбивает строку на лист по делимитеру
+
+
+Похоже что для работы с файлами ненужно импортировать библиотеку
+f = open('poem.txt', 'w')
+f.write(poem)
+f.close()
+f = open('poem.txt') # if no mode is specified, 'r'ead mode is assumed bydefault
+while True:
+    line = f.readline()
+    if len(line) == 0: # zerolength indicates EOF
+        break
+f.close()
+
+Python provides a standard module called pickle using which you can store any
+Python object in a file and then gei it back later. This is called storing the
+object persistently.
+
+“Pickling” is the process whereby a Python object hierarchy is converted
+into a byte stream, and “unpickling” is the inverse operation, whereby a byte
+stream is converted back into an object whereby a Python object hierarchy is
+converted into a byte stream, and “unpickling” is the inverse operation,
+whereby a byte stream is converted back into an object
+
+import pickle
+list1=['some','test']
+f = open('somefile', 'wb')
+pickle.dump(list1, f)
+f.close()
+del list1
+f = open('somefile', 'rb')
+list2 = pickle.load(f)
+f.close()
+
+
+
+class ShortInputException(Exception):
+4365 '''A user-defined exception class.'''
+4366 def __init__(self, length, atleast):
+4367 Exception.__init__(self)
+4368 self.length = length
+4369 self.atleast = atleast
+4370 try:
+4371 text = input('Enter something --> ')
+4372 if len(text) < 3:
+4373 raise ShortInputException(len(text), 3)
+4374 # Other work can continue as usual here
+4375 except EOFError:
+4376 print('Why did you do an EOF on me?')
+4377 except ShortInputException as ex:
+4378 print('ShortInputException: The input was {0} long, expected at
+4379 least {1}'\
+4380 .format(ex.length, ex.atleast))
+4381 else:
+4382 print('No exception was raised.'
+
+Standart libraries
+
+sys.version_info содержит лист с информацией о используемой версии пайтона
+
+import warnings
+warining.warn("Atention!", RuntimeWarning)
+
+logging
+import os, platform, logging
+4542 if platform.platform().startswith('Windows'):
+4543 logging_file = os.path.join(os.getenv('HOMEDRIVE'),
+4544 os.getenv('HOMEPATH'), 'test.log')
+4545 else:
+4546 logging_file = os.path.join(os.getenv('HOME'), 'test.log')
+4547 logging.basicConfig(
+4548 level=logging.DEBUG,
+4549 format='%(asctime)s : %(levelname)s : %(message)s',
+4550 filename = logging_file,
+4551 filemode = 'w',
+4552 )
+4553 logging.debug("Start of the program")
+4554 logging.info("Doing something")
+4555 logging.warning("Dying now")
+
+
+def some_func():
+    return (1,2)  #tuple
+
+var1,var2 = some_func()
+
+a, *b = [1,2,3,4]
+
+a,b = b,a #swap
+
+__getitem__(self,key)  Called when x[key] indexing operation is used
+
+
+DJANGO#######################################################################
+
+для создания проекта
+django-admin startproject mysite
+
+Также желательно хранить код в недоступной для извне директории сервера чтобы пользователи не могли увидеть его.
+
+manage.py утилита командной строки для взаимодействия с джангой
+python manage.py runserver запускает сервер соответственно, подключиться к нему можно по адерссу http://127.0.0.1:8000/
+Это development django server Его можно использовать вместо апача до продакшена.
+В случае изменения кода перезагружать сервер не надо, но в случае добавления файлов нужно.
+
+app это часть проекта которая что-то делает.
+python manage.py startapp appname
+
+походу в версии 1.11 нету path и вместо него используется урл
+
+
+A traditional web server don't know how to deploy python app
+
+PEP - Python enhancement proposal
+
+
+By default, INSTALLED_APPS contains the following apps, all of which come with
+Django:
+django.contrib.admin - The admin site. You'll use it shortly
+django.contrib.auth - An authentication system
+django.contrib.contenttypes - A framework for content types
+django.contrib.sessions - A session framework
+django.contrib.messages - A messaging framework
+django.contrib.staticfiles - A framework for managing static files
+
+python manage.py migrate
+The migrate command looks at the INSTALLED_APPS setting and creates any
+necessary database tables according to the database tables according to the
+database settings in your mysite/settings.py file and the database 
+migrations shipped with the app ( we'll cover those later).
+
+A model is the single, definitive source of truth about your data. It contains
+the essential fields and behaviors ofthe data you're storing. Django follows
+the DRY Principle. The goal isto define your data model in one place and 
+automaticallyderive things from it.
+
+example of models
+
+polls/models.py
+from django.db import models
+
+class Question(models.Model):
+    questioon_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField('date published')
+
+class Choice(moels.Model):
+    question = models.ForeingKey(Question, on_delete=models.CASCADE)
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+
+Some Field classes have required arguments. CharField, for example, requires
+that you give it a max_length.
+
+That's used not only in the database schema, but in validatioon, as we'll
+soon see.
+
+Finally, note a relationship is defined, using ForeignKey.
+
+Django apps are "plluggable": You can use an app in multiple projects, and you
+can distribute apps, because they don't have to be tied to a given Django
+installation,
+
+To include the app in our project, we need to add a referenceto its 
+configuration class in the INSTALLED_APPS
+The PollsConfig class is in the polls/apps.py file, so its dotted path
+is 'polls.apps.PollsConfig' Edit the mysite/settings.py file and add that dotted
+path to the INSTALLED_APPS setting.
+
+When run
+python manage.py makemigrations polls
+
+By running makemigrations, you're telling Django that you've made some changes
+to your models (in this case, you've made new ones) and that you'd like the
+changes to be stored as a migratioon.
+Migratons are how Django stores changes to your models(and thus database schema)
+they are just files on disk.
+You can read the migration for your new model if you like; it's the file
+polls/migrations/0001_initial.py
+
+You can run specific migration
+python manage.py sqlmigrate polls 0001
+
+database-specific field types such as auto_increment are hadledfor you 
+automatically.
+
+You can run python manage.py check
+this checks for any problems in your project without making migrations or
+touching the database.
+
+Now run python manage.py migrate to crate those model tables in your database
+
+Migrations are very powerful and let you change your models over time, as you
+develop yourproject, without the need to delete your database or tables and make
+new ones - it specializes in upgradingyour database live, without losing data.
+
+Three-step guide to making changes:
+Change your models (in models.py)
+Run python manage.py makemigrations to create migrations for those changes
+Run python manage.py migrate to apply those changes to the database
+
+The reason that there are separate commands to make and apply migrations is 
+because ypu'll commit migratons to your version control system and ship them
+with your appp; they not only make your development easier, they're also
+useable by other developers and in production.
+
+Create an admin user
+python manage.py createsuperuser
+
+Go to http:/127.0.0.1:8000/admin/
+
+Also we need to tell the admin that Question objects have an admin interface.
+open polls/admin.py and edit
+from django.contrib import admin
+from .models import Question
+admin.site.register(Question)
+
+Now let's add a few more views to polls/views.py
+def detail(request, question_id):
+    return HttpResponse("You're looking at question %s." % question_id)
+def results(request, question_id):
+    response = "You're looking at the results of question %s."
+    return HttpResponse(response % question_id)
+def vote(request, question_id):
+    return HttpResponse("You're voting on question %s." % question_id)
+
+Wire thesenew views intothe polls.urls module by addingthe following path()
+calls:
+polls/urls.py
+from django.urls import path
+from . import views
+urlpatterns = [
+# ex: /polls/
+path('', views.index, name='index'),
+# ex: /polls/5/
+path('<int:question_id>', view.detail, name='detail'),
+# ex: /polls/5/results/
+path('<int:question_id>/results/', view.results, name='results'),
+# ex: /polls/5/vote/
+path('<int:question_id>/vote/', views.vote, name='vote'),
+]
+
+Use Django's template system to separate the design from Python.
+First, create a directory called templates in your polls directory. Django
+will look for templates in there.
+
+By covention DjangoTemplates looks for a "templates" subdirectory in each of the
+INStALLED_APPS
+Your template should be at polls/templates/polls/index.html
+
+index.html
+(% if latest_question_list %}
+<ul>
+{% for question in latest_question_list %}
+<li> <a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li>
+{% endfor %}
+</ul>
+{% else %}
+<p>No polls are available.</p>
+{% endif %}
+
+Now let's update our index view in polls/views.py
+polls/views.py
+
+from django.http import HttpResponse
+from django.template import loader
+from .models import Question
+
+def index(request):
+    latest_question_list = Questioon.objects.order_by('-pub_date')[:5]
+    template = loader.get_template('polls/index.html')
+    context = {
+    'latest_question_list': latest_question_list,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+
+shortcut version
+polls/views.py
+from django.shortcuts import render
+from .models import Question
+
+def index(request):
+    latest_question_list = Question.objects.order_by('-pub_date')[:5]
+    context = {'latest_questton_list': latest_question_list}
+    return render(request,'polls/index.html;, context)
+
+
+
+
+polls/views.py
+from django.http import Http404
+from django.shortcuts import render
+from .models import Question
+#...
+def detail(request, question_id):
+    try:
+        question = Question.objects.get(pk=question)
+    except Question.DoesNotExist:
+        raise Http404("Question does not exist")
+    return render(request, 'polls/detail.html', {'question': question})
+
+shortcut
+polls/views.py
+from django.shortcuts import get_object_or_404, render
+from .models import QUestion
+#...
+def detail(request, queston_id):
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, 'polls/detail.html', {'question': question})
+
+
+Using hardocred url is tightly-coupled approach
+Use this format instead ( add to local urls.py 'app_name="polls"')
+<a href="{% url 'polls:detail' question.id %}">Somelink</a>
+
+if you want to change name in url, change it in urls.py instead of template
+
+
+Froms
+
+<h1>{{ question.question_text }}</h1>
+{% if error_message %}<p><strong>{{ error_message }}>/strong></p>{% endif %}
+<form action="{% url 'polls:vote; question.id %} method="post">
+{% csrf_token %}
+{% for choice in question.choice_set.all %}
+<input type="radio" name="choice" id="choice{{ forloop.counter }}" 
+value="{{ choice.id }}" />
+<label for"choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+[% endfor $}
+<input type="submit" value="Vote" />
+</form>
+
+{% csrf_token %} is for protecting against Cross Site Request Forgeries
+
+polls/views.py
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
+from .models import Choice, Question
+#...
+def vote(request, question_id):
+    question = get_object_or_404(Question, pk=question_id)
+    try:
+        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+    except (KeyError, Choice.DoesNotExist):
+        #Redisplay the question voting form
+        return render(request, 'polls/detail.html', {
+        'question': question,
+        'error_message': "You didn't select a choice.",
+         })
+    else:
+         selected_choice.votes += 1
+         selected_choice.save()
+         #Always return an HttpResponseRedirect after successfuly dealing
+         #with POST data. This prevents data from being posted twice if a
+         #user hits the Back button
+         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+Вероятно для того чтобы задать homepage мне придется создать отдельное app
+например home, добавить его в сеттингс прописать в нем view index и добавить
+сроку path('', include('home.urls')) в urls.py сайта
+
+хотя наверное так будет не совсем правильно.
+
+Создай  app home, добавь в сеттингс, создай в нем вив index. В главный urls
+добавь 
+from home import views
+и
+path('', views.index, name='index'),
+
+
+Установка бутстрапа возможна через пип
+
+pip install django-bootstrap3
+
+затем добавить в settings.py в INSTALLED_APPS
+
+'bootstrap3'
+
+После я могу использовать это в своих шаблонах
+
+{% load bootstrap3 %}
+{# load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+
+Бутстрап это фронтэнд фреймворк который дает фундамент. Если нужен кастомный 
+дизайн, придется добавить свой css
+
+
+добавить меню на базовый шаблон можно к примеру зарегистрировав тэг
+
+
+
+
+{{ value|truncatechars:9 }}
+If value is "Joel is a slug", the output will be "Joel i...".
+Better use {{ value|truncatechars_html:9 }} or truncatewords_html
+
+
+{% load static %}
+<img src="{% get_static_prefix %}images/hi.jpg" alt="Hi!" />
+
+
+
+>>> from polls.models import Question, Choice 
+>>> Question.objects.all()
+>>> from django.utils import timezone
+>>> q = Question(question_text="What's new?", pub_date=timezone.now())
+>>> q.save()
+
+И так. Есть generic вивы для например вывода списка, объекта и создание (шаблоны все равн для них создаешь ты)
+Т.к. ты наследуешь класс от них то можешь вносить свой функционал
+
+Делаем человескую коммит миграции
+python manage.py makemigrations someapp --name=alter_something
+python manage.py showmigrations
+globals() locals()
+max() min() builtin functions for collections
+somelist.reverse())
+memoryview(somevar) memoryview(somevar).hex() will return memory value
+id() return the indentity of the object
+В C под каждую переменную мы выделяем определенное место в памяти.
+ В пайтоне же мы ссылаемся на место в памяти где хранится данное значение.
+ Т.е. две переменные x = 2 и y = 2 будут ссылаться на одно место. x += 1 будет ссылаться уже на другое место
+проверить это можно с помощью id(), однако это будет работать только с маленькими числами и строками. 
+Большие строки и числа а так экземпляры объектов будут иметь свой индентификатор.
+но и в этом случае  x = y будут ссылаться на одно место и иметь один индетификатор.
+допустим что x и y равны 1000000
+то они могут иметь разные id
+x == y True
+x is y False
+
+repr(somevar) выведет информацию в репрезантивном виде. это например то что выведится в промте когда идет
+простой вывод переменной, часто значение __repr__ приравнивают к значению __str__ но это не обязательно
+
+
+useful libs
+requests
+socket
+twisted
+io
+os
+sys
+math
+re
+functools (сюда переехал reduce)
+Generator functions allow you to declare a function that behaves like an iterator, i.e. it can be used in a for loop
+ doubles = [2 * n for n in range(50)]
+ doubles = list(2 & n for n in range(50))
+ generators are sort of iterator
+ range returns a list while xrange returns a generator (at least in copcept)
+ A generator will provide performance benefits only if we do not inted to use that set of generated values more than once
+ import typing; def someFunc(name: str) -> str: ...
+ Это только добавляет видимые рекомендации в  док, но не вызывает ошибок при интерпретации
+ Iterating means repeating some steps, while enumerating means going through all values in a collection of values.
+ Enumeating is a special case of iterating where step is getting a value from a collectoin
+
+
+ASCII and Unicode are character sets.
+ASCII is a 7-bit charater set (128)
+
+Unicode
+UTF-8 (Unicode Transformation Format, 8-bit)
+Распространенный формат кодирования который позволяет более компактно
+хранить и использовать данные.
+Получается что латинские буквы и простые символы которые есть в ascii
+в utf кодируются 8 битами. Для шифровки символов невходяших в ascii 
+используется до 4 байт.
+
+KOI8-R
+extended ASCII set with cyrilic characters Занимает 8 бит.
+ 1 << 3 (мы будем 3 раза удваивать единицу: 2,4,8 ответ будет 8)
+ 8 >> 3 обратная операция 
+ 1 << 8 == 1 * 2**2 == 256 
+ т.е. указав первым параметром количество а вторым размерность в битах (в данном случае размерность 1 байт)
+мы получим общее количество бит комбинаций, 1 << 8 равно 256 а 2 << 8 равно 512
+некоторые языки будут хранить boolean информацию как byte а не bit
+NAND and NOR just are inverse of AND and OR operations. (Не уверен что они есть в python)
+На самом деле bit shift операции действительно только смещают биты влево или в право соответственно
+так bin(0b001100 << 1) == 0b11000 а bin(0b001100 >> 1) == 0b110
+ m >> n  m - заданное число, >> - оператор, n - размер сдвига 
+ 0b - bits, b - bytes, 0x - hex
+чтобы изменить скажем 2 бит в 0b100100 нам надо 0b100100 | 1 << 1
+Получается
+100100
+000010
+------
+100110
+
+ ^ - XOR  bin(0b100100 ^ 1 << 2) вернет 0b100000. Такая операция заменит значение бита на противоположное
+bin(0b100100 & ~(1 << 2)) операция по 'выключению' 3 бита, т.е. при любом начальном значении он будет равен нулю. ~ == not для bitwise
+Чтобы просто проверить опеределенный бит можно использоать &. bin(0b100100 & 1 << 2) == 0b100; bin(0b100100 & 1 << 1 == 0b0
+это проверит был ли этот бит установлен как True, любой результат отличный от нуля будет означать это

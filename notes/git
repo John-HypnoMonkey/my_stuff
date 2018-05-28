@@ -1,0 +1,34 @@
+Есть local repository это то где ты работает и remote repository это скажем гитхаб. Изменения пушишь из локального в удаленный.
+git init #initialize git repository
+git add <file> #add file to the staging area
+git rm --cached <file>  #remove file frome the staging area
+git status #show staging area
+git commit #put changes from staging area into local repository
+git push #takes local repository and push it into remote repository
+git pull #pull latest changer from remote repository
+git clone #clone repository into current folder
+
+To show config
+git config --global --list
+To set
+git config --global user.name 'John-HypnoMonkey'
+git config --global user.email 'Hypnomonkey@protonmail.com'
+
+git branch branchname  # create a branch but didn't change your current branch
+git checkout branchname # will change the work branch
+git checkout master # move back to master branch (master is a local branch)
+
+while in the master
+git merge branchname # добавит изменения из  бранча в мастер( локально, для ремоута после надо сделать пуш)
+
+
+git remote add origin <url_of_git> 
+git remote #shows all remote repos
+git push -u origin master
+git pull  #upload all actual changes from remote
+
+Если на ремоуте создан бранч, создать связанный с ним локальный бранч можно так
+git checkout -b better_performance origin/better_performance
+git branch -D better_performance #will delete the branch
+
+git push origin branchname #создаст или дополнит  на ремоуте ветку

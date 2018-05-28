@@ -1,0 +1,207 @@
+xbindkeys (позволяет биндить клавиши на выполнение команд в конслоли)
+xdotool позволяет эмулировать действия на компьютере ( в том числе нажатие клавиш)
+ls команда не работает. очевидно потому что она выполняется через баш, а в баше свои представление о текущем каталоге
+
+в директории $HOME лежит файл конфига .xbindkeysrc (по умолчанию он не создается)
+
+примеры команд в конфиге
+"angband"
+control + e   
+
+#слип и дэлай нужны чтобы команда успела прочитаться
+"sleep 0.2 && xdotool key --delay 15 ctrl+b"
+KP_Insert  
+
+После изменения конфига следует перезапустить xbindkeys
+killall -HUP xbindkeys && xbindkeys
+
+Так я могу быстро переключаться между окнами, что может быть полезно.
+
+Для того чтобы выделять и копировать информацию между окнами tmux используй
+ctrl+b [  ctrl+space alt+w  Чтобы вставить ctrl+b ]
+
+В виме вставлять в режиме инсерт при англ раскладке
+также в режиме [ возможна навигация с помощью f и g(надо узнать подробнее)
+
+mplayer
+
+-geometry 0:0  (координаты где расположить видео)
+
+alias для отображение всех алиасов
+alias la='ls -A'
+
+tmux
+c-b + q и нажимаешь нужный номер панели для того чтобы переключиться
+
+sudo fdisk -l
+
+create the mount poit
+sudo mkdir /media/external
+
+#if device have fat format
+sudo mount -t fvat /dev/sbd1 /media/external -o uid=1000, gid=1000, utf, dmask=027, fmask=137
+#else
+ sudo mount -t -ntfs-3g /dev/sdb1 /media/external
+sudo unmount /dev/sdb1
+
+Чтобы осуществить простейшее подключение по ssh
+
+надо
+1 установить ssh на обоих компьютерах
+2 знать ip второго пк ( через  ifconfig)
+3 подключиться 
+ssh user@192.168.x.x
+
+Доступ будет только черещ cli
+Чтобы добавить возможность запускать программы на втором пк
+(взаимодействовать с X11) меняем строки в /etc/ssh/sshd-config второго пк
+X11Forwarding yes
+X11DisplayOffset 10
+X11UseLocalhost yes
+
+копирование файлоф
+
+SCP(Secure CoPy)
+scp somefile user@servername:/home/somedir
+
+скопировать все содержимое папки (рекуривно)
+
+scp -r /home/somedir user@servername:/home/somedir/
+
+меджу серверами
+
+scp -r user@server1:/home/dir/ user@server2:/home/dir2/
+
+
+
+Можно собрать все файлы в тар и перебросить по ssh
+(cd /tmp ; tar cf - ./xyz*) | ssh hachi "cd /tmp ; tar xcvf -"
+
+To synchronise/copy a remote set of files to a local set:
+rsync -ve ssh djm@hachi:/bin/c* /tmp
+To synchronise/copy a local set of files with a local set:
+rsync -ve ssh djm@hachi:/bin/c* /tmp
+
+вывести процессы с php в названии
+ps aux | grep php
+
+
+скрипты и алиасы хранятся в
+~/.bashrc
+
+отобразить содержимое файла
+cat
+
+
+
+useful commands
+
+killall chrome //убивает только не рутовые программы
+
+
+touch *.txt //если приминить на сущестующем файле то время изменение
+файла обновится (удобно при бэкапах)
+
+which someprogram //говорит  где находится данная программа
+
+ping www.google.com -c 3
+
+sudo blkid // shows all drives on the system
+
+sudo -s
+
+su someusername // зайти за другого пользователя
+
+sudo reboot
+sudo shutdown
+sudo shutdown -c //отмена 
+
+
+uname -a //показывает информацию о версии системы, имя машины, архитектуру
+время и тд
+
+ip addr show eth0
+
+
+df -ah //показывает свободное место на дисках
+
+
+du -sh somedir/  //размер папки
+
+netstat показывает все открытые порты
+
+sudo nestat -tulpn  //все tcp udp порты
+
+ps aux | grep someprocess   // показывает сколько ресурсов cpu использует процесс
+
+ls /mnt
+mount /dev/sda2 /mnt   // маунтим какое-то устройство, например флешку
+
+mount    // выводит все замаунтиное
+
+
+
+groups USERNAME
+
+sudo adduser USERNAME GROUP
+
+sudo addgroup GROUP
+
+sudo dpkg -i DEB_PACKAGE
+
+tar xf community_images.tar.gz -C /home/emmys/Pictures/Community/
+
+tar xf community_images.tar.gz
+sudo apt-get remove application
+
+1. / – Root
+2. /bin – User Binaries
+3. /sbin – System Binaries
+4. /etc – Configuration Files
+5. /dev – Device Files
+6. /proc – Process Information
+7. /var – Variable Files
+8. /tmp – Temporary Files
+9. /usr – User Programs
+10. /home – Home Directories
+11. /boot – Boot Loader Files
+12. /lib – System Libraries
+13. /opt – Optional add-on Applications
+14. /mnt – Mount Directory
+15. /media – Removable Media Devices
+16. /srv – Service Data
+cat /proc/meminfo
+ipcs -m
+echo xterm-256color
+ls -R
+You can use more than one parameter at a time if you want to. The double dash parameters must
+be listed separately, but the single dash parameters can be combined together into a string behind
+the dash.
+cp -R dir1 dir2
+stat filename
+file filename
+learn more about ps command
+printenv
+set
+
+#set locale variables
+test=testing
+echo $test
+usnet test
+
+#set global variables
+test=testing
+export test
+
+
+PATH=$PATH:/home/rich/test
+
+When you log in to the Linux system, the bash shell starts as a login shell. The login shell looks
+for four different startup files to process commands from. The order in which the bash shell
+processes the files is:
+■ /etc/profile
+■ $HOME/.bash profile
+■ $HOME/.bash login
+■ $HOME/.profile
+sudo -E env "PATH=$PATH" npm -v # чтобы выполнить команду путь которой не обозначен в глобальных переменных
+s-nail - send and receive e-mails
