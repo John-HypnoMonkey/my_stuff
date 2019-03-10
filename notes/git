@@ -32,3 +32,30 @@ git checkout -b better_performance origin/better_performance
 git branch -D better_performance #will delete the branch
 
 git push origin branchname #создаст или дополнит  на ремоуте ветку
+
+change commit message
+git commit --amend -m 'Correct comit message'
+
+git log
+
+git cherrypick
+1) скопировать хэш коммита 
+2) git checkout <branch_name>
+3) git cherry-pick <hash>
+
+git reset --soft <hash>
+возвращает бранч к указанному коммиту, но оставляет все изменения из "удаленных" коммитов в staging area
+
+git reset --hard <hash>
+тоже самое, но удаляет изменения
+
+Если после hard reset потребовалось вернуть потертый коммит, это возможно (но только в рамках определенного
+периода времени, пока git garbage collector не стер коммиты навсегд)
+git reflog # здесь можно посмотреть хэш удаленного коммита
+git checkout <hash> # переключит на удаленный коммита, однако чтобы с ним работать нужно создать бранч
+git branch backup_name
+
+Если нужно отменить коммит, не меняя историю
+git revert <hash> # создаст коммит который отменит изменения
+
+git checkout /path_to_the_file/file_name # подтянет файл из последнего коммита затерев локальные изменения
